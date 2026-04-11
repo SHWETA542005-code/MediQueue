@@ -153,4 +153,3 @@ Open `http://localhost:5173`
 **Shweta** — B.Tech IT & Network Security, NSUT Delhi
 
 
-## Project Structure
