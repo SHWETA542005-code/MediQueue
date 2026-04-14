@@ -41,7 +41,7 @@ const PatientDashboard = () => {
 
   useEffect(() => {
     if (!activeToken) return;
-    const socket = io('http://localhost:5000');
+    const socket = io(import.meta.env.VITE_SOCKET_URL);
     socket.emit('join-department', activeToken.department._id);
 
     socket.on('token-status-update', (data) => {

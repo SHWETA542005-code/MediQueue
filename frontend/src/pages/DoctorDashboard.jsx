@@ -45,7 +45,7 @@ const DoctorDashboard = () => {
     if (!selectedDept) return;
     fetchQueue(selectedDept);
 
-    const socket = io('http://localhost:5000');
+    const socket = io(import.meta.env.VITE_SOCKET_URL);
     socket.emit('join-department', selectedDept);
     socket.on('new-token', () => {
       fetchQueue(selectedDept);

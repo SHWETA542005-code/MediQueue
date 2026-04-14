@@ -11,33 +11,32 @@ connectDB();
 const app = express();
 const server = http.createServer(app);
 
+const allowedOrigins = [
+  'http://localhost:5173',
+  process.env.FRONTEND_URL, // will set this after Vercel deploy
+];
+
 const io = new Server(server, {
   cors: {
-    origin: 'http://localhost:3000',
+    origin: allowedOrigins,
     methods: ['GET', 'POST'],
   },
 });
 
-// Make io accessible in controllers
 app.set('io', io);
 
-app.use(cors());
+app.use(cors({ origin: allowedOrigins }));
 app.use(express.json());
 
-// Routes
 app.use('/api/auth', require('./routes/auth.routes'));
 app.use('/api/tokens', require('./routes/token.routes'));
 app.use('/api/departments', require('./routes/dept.routes'));
 
-// Socket.io connection
 io.on('connection', (socket) => {
   console.log('Client connected:', socket.id);
-
   socket.on('join-department', (departmentId) => {
     socket.join(departmentId);
-    console.log(`Socket ${socket.id} joined department ${departmentId}`);
   });
-
   socket.on('disconnect', () => {
     console.log('Client disconnected:', socket.id);
   });
