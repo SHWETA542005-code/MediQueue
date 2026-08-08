@@ -13,7 +13,8 @@ const server = http.createServer(app);
 
 const allowedOrigins = [
   'http://localhost:5173',
-  process.env.FRONTEND_URL, // will set this after Vercel deploy
+  'https://mediqueue-five.vercel.app',
+  process.env.FRONTEND_URL,
 ];
 
 const io = new Server(server, {
